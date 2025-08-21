@@ -8,11 +8,11 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-	return (
+  return (
 		<html lang="fr">
 			<body>
 				<Providers>{children}</Providers>
-			</body>
-		</html>
-	);
+      </body>
+    </html>
+  );
 }

@@ -1,6 +1,6 @@
 "use client";
 import { create } from "zustand";
-import { get, set } from "idb-keyval";
+import { get as idbGet, set as idbSet } from "idb-keyval";
 
 type CartItem = {
 	productId: number;
@@ -32,19 +32,19 @@ export const useCartStore = create<CartState>((set, get) => ({
 		const idx = items.findIndex((i) => i.productId === item.productId && i.size === item.size && i.color === item.color);
 		if (idx >= 0) items[idx].qty += item.qty; else items.push(item);
 		set({ items });
-		set(STORAGE_KEY, items);
+		void idbSet(STORAGE_KEY, items);
 	},
 	removeItem: (productId) => {
 		const items = get().items.filter((i) => i.productId !== productId);
 		set({ items });
-		set(STORAGE_KEY, items);
+		void idbSet(STORAGE_KEY, items);
 	},
 	clear: () => {
 		set({ items: [] });
-		set(STORAGE_KEY, []);
+		void idbSet(STORAGE_KEY, []);
 	},
 	load: async () => {
-		const saved = (await get(STORAGE_KEY)) as CartItem[] | undefined;
-		if (saved) set({ items: saved, hydrated: true }); else set({ hydrated: true });
+		const saved = (await idbGet(STORAGE_KEY)) as CartItem[] | undefined;
+		if (Array.isArray(saved)) set({ items: saved, hydrated: true }); else set({ hydrated: true });
 	},
 })); 

@@ -13,10 +13,12 @@ const schema = z.object({
 	sizes: z.array(z.string()).min(1).optional(),
 	colors: z.array(z.string()).min(1).optional(),
 	inStock: z.boolean().optional(),
+	images: z.array(z.object({ url: z.string().url(), width: z.number().int(), height: z.number().int(), alt: z.string() })).optional(),
 });
 
 export async function GET(_req: NextRequest, { params }: { params: { id: string } }) {
-	const [p] = db.select().from(products).where(eq(products.id, Number(params.id))).all();
+	const rows =await db.select().from(products).where(eq(products.id, Number(params.id))).all();
+	const p = Array.isArray(rows) ? rows[0] : null;
 	if (!p) return NextResponse.json({ error: "Not found" }, { status: 404 });
 	return NextResponse.json(p);
 }
@@ -25,11 +27,21 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
 	const json = await req.json();
 	const parsed = schema.safeParse(json);
 	if (!parsed.success) return NextResponse.json({ error: "Invalid" }, { status: 400 });
-	db.update(products).set(parsed.data as any).where(eq(products.id, Number(params.id))).run();
+	const { images, ...update } = parsed.data as any;
+	const res: any = await db.update(products).set(update).where(eq(products.id, Number(params.id))).run();
+	if (res.changes === 0) return NextResponse.json({ error: "Not found" }, { status: 404 });
+	if (Array.isArray(images)) {
+		// Replace product images
+		const res: any = await db.delete(productImages).where(eq(productImages.productId, Number(params.id))).run();
+		for (const img of images) {
+			const res: any = await db.insert(productImages).values({ productId: Number(params.id), url: img.url, width: img.width, height: img.height, alt: img.alt }).run();
+		}
+	}
 	return NextResponse.json({ ok: true });
 }
 
 export async function DELETE(_req: NextRequest, { params }: { params: { id: string } }) {
-	db.delete(products).where(eq(products.id, Number(params.id))).run();
+	const res: any = await db.delete(products).where(eq(products.id, Number(params.id))).run();
+	if (res.changes === 0) return NextResponse.json({ error: "Not found" }, { status: 404 });
 	return NextResponse.json({ ok: true });
 } 

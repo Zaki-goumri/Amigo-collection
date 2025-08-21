@@ -3,7 +3,8 @@ import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import "../globals.css";
 import { Cormorant_Garamond, Inter } from "next/font/google";
-
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 export const metadata: Metadata = {
 	title: "Amigo",
 	description: "Amigo - Luxury womenswear",
@@ -24,9 +25,8 @@ async function getMessages(locale: string) {
 	}
 }
 
-export default async function LocaleLayout({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
-	const resolved = await params;
-	const locale = resolved.locale;
+export default async function LocaleLayout({ children, params }: { children: React.ReactNode; params: { locale: string } }) {
+	const { locale } = params;
 	if (!locales.includes(locale as Locale)) notFound();
 	const messages = await getMessages(locale);
 	if (!messages) notFound();
@@ -34,7 +34,11 @@ export default async function LocaleLayout({ children, params }: { children: Rea
 	return (
 		<html lang={locale} dir={dir} className={`${serif.className} ${sans.className} bg-black text-white`}>
 			<body className="antialiased">
-				<NextIntlClientProvider locale={locale} messages={messages}>{children}</NextIntlClientProvider>
+				<NextIntlClientProvider locale={locale} messages={messages}>
+					<Navbar />
+					{children}
+					<Footer />
+				</NextIntlClientProvider>
 			</body>
 		</html>
 	);

@@ -23,12 +23,8 @@ export default function LandingPage() {
 					<p className="text-neutral-300 text-lg">Crafted silhouettes, enduring materials, and quiet confidence. Amigo celebrates modern femininity with editorial minimalism.</p>
 				</div>
 				<div className="grid grid-cols-2 gap-4">
-					<div className="aspect-[3/4] overflow-hidden">
-						<img src="https://picsum.photos/seed/hero1/800/1200" alt="Featured 1" className="w-full h-full object-cover" />
-					</div>
-					<div className="aspect-[3/4] overflow-hidden mt-10">
-						<img src="https://picsum.photos/seed/hero2/800/1200" alt="Featured 2" className="w-full h-full object-cover" />
-					</div>
+					<div className="aspect-[3/4] overflow-hidden bg-neutral-900" />
+					<div className="aspect-[3/4] overflow-hidden mt-10 bg-neutral-900" />
 				</div>
 			</section>
 
@@ -37,9 +33,7 @@ export default function LandingPage() {
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 					{["silk", "linen", "cashmere"].map((k) => (
 						<div key={k} className="group">
-							<div className="aspect-[3/4] overflow-hidden bg-neutral-900">
-								<img src={`https://picsum.photos/seed/${k}/900/1200`} alt={k} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-							</div>
+							<div className="aspect-[3/4] overflow-hidden bg-neutral-900 transition-transform duration-500 group-hover:scale-105" />
 							<div className="mt-3 text-sm uppercase tracking-widest text-neutral-400">{k}</div>
 						</div>
 					))}

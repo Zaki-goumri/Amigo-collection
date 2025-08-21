@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import { db } from "@/db";
-import { admins, products, productImages } from "@/db/schema";
+import { admins, products } from "@/db/schema";
 import bcrypt from "bcrypt";
 
 async function main() {
@@ -44,17 +44,7 @@ async function main() {
 		try {
 			const res = db.insert(products).values(p).run();
 			const productId = Number(res.lastInsertRowid);
-			// placeholder images; to be replaced by Cloudinary later
-			db.insert(productImages)
-				.values({
-					productId,
-					url: `https://picsum.photos/seed/${p.slug}/1200/1600`,
-					width: 1200,
-					height: 1600,
-					alt: p.name,
-				})
-				.run();
-			console.log(`Seeded product: ${p.name}`);
+			console.log(`Seeded product: ${p.name} (id=${productId})`);
 		} catch (e) {
 			console.log(`Product exists - skipping: ${p.slug}`);
 		}

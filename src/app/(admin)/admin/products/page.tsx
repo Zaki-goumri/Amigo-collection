@@ -2,8 +2,12 @@ import Link from "next/link";
 import { db } from "@/db";
 import { products } from "@/db/schema";
 
-export default function AdminProductsPage() {
-	const list = db.select().from(products).all();
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
+export default async function AdminProductsPage() {
+	const rows = await db.select().from(products).all();
+	const list = Array.isArray(rows) ? rows : [];
 	return (
 		<main className="min-h-screen bg-black text-white px-6 md:px-10 xl:px-20 py-12">
 			<header className="flex items-center justify-between mb-8">
@@ -24,7 +28,7 @@ export default function AdminProductsPage() {
 						<tr key={p.id} className="border-t border-white/10">
 							<td className="py-2">{p.id}</td>
 							<td>{p.name}</td>
-							<td>{(p.priceCents / 100).toFixed(2)} €</td>
+							<td>{(p.priceCents / 100).toFixed(2)} DA</td>
 							<td className="text-right"><Link href={`/admin/products/${p.id}/edit`} className="underline">Edit</Link></td>
 						</tr>
 					))}

@@ -1,11 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import ImageUploader from "@/components/ImageUploader";
+
+type Image = { url: string; width: number; height: number; alt: string };
 
 export default function EditProductPage({ params }: { params: { id: string } }) {
-	const router = useRouter();
 	const [status, setStatus] = useState<string | null>(null);
 	const [form, setForm] = useState({ slug: "", name: "", description: "", priceCents: 0, category: "", sizes: "XS,S,M,L", colors: "Black,White", inStock: true });
+	const [images, setImages] = useState<Image[]>([]);
 
 	async function onSubmit(e: React.FormEvent) {
 		e.preventDefault();
@@ -18,12 +20,11 @@ export default function EditProductPage({ params }: { params: { id: string } }) 
 			sizes: form.sizes.split(",").map((s) => s.trim()).filter(Boolean),
 			colors: form.colors.split(",").map((s) => s.trim()).filter(Boolean),
 			inStock: form.inStock,
-			images: [],
+			images,
 		};
 		const res = await fetch(`/api/products/${params.id}`, { method: "PATCH", body: JSON.stringify(payload) });
 		setStatus(res.ok ? "Saved" : "Failed");
 	}
-
 	return (
 		<main className="min-h-screen bg-black text-white px-6 md:px-10 xl:px-20 py-12">
 			<h1 className="font-serif text-4xl mb-6">Edit Product</h1>
@@ -35,6 +36,10 @@ export default function EditProductPage({ params }: { params: { id: string } }) 
 				<input value={form.sizes} onChange={(e) => setForm({ ...form, sizes: e.target.value })} name="sizes" placeholder="sizes (comma separated)" className="bg-black border border-white/20 px-4 py-3" />
 				<input value={form.colors} onChange={(e) => setForm({ ...form, colors: e.target.value })} name="colors" placeholder="colors (comma separated)" className="bg-black border border-white/20 px-4 py-3" />
 				<label className="flex items-center gap-2 text-sm"><input checked={form.inStock} onChange={(e) => setForm({ ...form, inStock: e.target.checked })} type="checkbox" name="inStock" /> In stock</label>
+				<div className="md:col-span-2">
+					<p className="text-sm mb-2">Images</p>
+					<ImageUploader value={images} onChange={setImages} />
+				</div>
 				<textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} name="description" placeholder="description" className="md:col-span-2 h-40 bg-black border border-white/20 px-4 py-3" />
 				<button className="border border-white px-6 py-3 uppercase tracking-widest hover:bg-white hover:text-black">Save</button>
 				{status && <p className="text-sm text-neutral-400">{status}</p>}
