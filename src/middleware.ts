@@ -1,9 +1,12 @@
 import createMiddleware from "next-intl/middleware";
 import { NextRequest, NextResponse } from "next/server";
 import { jwtVerify } from "jose";
-import { routing } from "@/i18n/routing";
 
-const intlMiddleware = createMiddleware(routing);
+const intlMiddleware = createMiddleware({
+	locales: ["fr", "en", "ar"],
+	defaultLocale: "fr",
+	localePrefix: "always"
+});
 
 const PUBLIC_FILE = /\.(.*)$/;
 

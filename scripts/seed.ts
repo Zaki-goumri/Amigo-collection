@@ -10,7 +10,7 @@ async function main() {
 
 	// upsert admin
 	try {
-		db.insert(admins).values({ email: adminEmail, passwordHash }).run();
+		await db.insert(admins).values({ email: adminEmail, passwordHash }).run();
 		console.log(`Admin created: ${adminEmail}`);
 	} catch (e) {
 		console.log("Admin exists - skipping");
@@ -42,7 +42,7 @@ async function main() {
 
 	for (const p of sampleProducts) {
 		try {
-			const res = db.insert(products).values(p).run();
+			const res = await db.insert(products).values(p).run();
 			const productId = Number(res.lastInsertRowid);
 			console.log(`Seeded product: ${p.name} (id=${productId})`);
 		} catch (e) {

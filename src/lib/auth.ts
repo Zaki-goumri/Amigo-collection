@@ -29,7 +29,7 @@ export async function verifyJwt(token: string) {
 }
 
 export async function setAuthCookie(token: string) {
-	cookies().set(TOKEN_COOKIE, token, {
+	(await cookies()).set(TOKEN_COOKIE, token, {
 		httpOnly: true,
 		path: "/",
 		secure: process.env.NODE_ENV === "production",
@@ -37,6 +37,6 @@ export async function setAuthCookie(token: string) {
 	});
 }
 
-export function clearAuthCookie() {
-	cookies().delete(TOKEN_COOKIE);
+export async function clearAuthCookie() {
+	(await cookies()).delete(TOKEN_COOKIE);
 } 
