@@ -1,0 +1,1554 @@
+The following is a digest of the repository "amigo.shop".
+This digest is designed to be easily parsed by Large Language Models.
+
+--- SUMMARY ---
+Repository: amigo.shop
+Files Analyzed: 45
+Total Text Size: 45.32 KB
+Estimated Tokens (text only): ~13,778
+
+--- DIRECTORY STRUCTURE ---
+amigo.shop/
+├── drizzle/
+│   └── meta/
+│       ├── _journal.json
+│       └── 0000_snapshot.json
+├── scripts/
+│   └── seed.ts [binary]
+├── src/
+│   ├── app/
+│   │   ├── (admin)/
+│   │   │   └── admin/
+│   │   │       ├── login/
+│   │   │       │   └── page.tsx
+│   │   │       ├── orders/
+│   │   │       │   └── page.tsx
+│   │   │       └── products/
+│   │   │           ├── [id]/
+│   │   │           │   └── edit/
+│   │   │           │       └── page.tsx
+│   │   │           ├── new/
+│   │   │           │   └── page.tsx
+│   │   │           └── page.tsx
+│   │   ├── [locale]/
+│   │   │   ├── admin/
+│   │   │   │   └── login/
+│   │   │   │       └── page.tsx
+│   │   │   ├── cart/
+│   │   │   │   └── page.tsx
+│   │   │   ├── checkout/
+│   │   │   │   └── page.tsx
+│   │   │   ├── product/
+│   │   │   │   └── [slug]/
+│   │   │   │       └── page.tsx
+│   │   │   ├── shop/
+│   │   │   │   └── page.tsx
+│   │   │   ├── layout.tsx
+│   │   │   └── page.tsx
+│   │   ├── api/
+│   │   │   ├── auth/
+│   │   │   │   ├── login/
+│   │   │   │   │   └── route.ts [binary]
+│   │   │   │   └── logout/
+│   │   │   │       └── route.ts [binary]
+│   │   │   ├── newsletter/
+│   │   │   │   └── route.ts [binary]
+│   │   │   ├── orders/
+│   │   │   │   ├── [id]/
+│   │   │   │   │   └── route.ts [binary]
+│   │   │   │   └── route.ts [binary]
+│   │   │   ├── products/
+│   │   │   │   ├── [id]/
+│   │   │   │   │   └── route.ts [binary]
+│   │   │   │   └── route.ts [binary]
+│   │   │   └── upload/
+│   │   │       └── sign/
+│   │   │           └── route.ts [binary]
+│   │   ├── favicon.ico [binary]
+│   │   ├── globals.css
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   ├── components/
+│   │   └── Providers.tsx
+│   ├── db/
+│   │   ├── index.ts [binary]
+│   │   └── schema.ts [binary]
+│   ├── i18n/
+│   │   ├── request.ts [binary]
+│   │   └── routing.ts [binary]
+│   ├── locales/
+│   │   ├── ar/
+│   │   │   └── common.json
+│   │   ├── en/
+│   │   │   └── common.json
+│   │   └── fr/
+│   │       └── common.json
+│   ├── store/
+│   │   └── cart.ts [binary]
+│   └── middleware.ts [binary]
+├── amigo_cursor_prompt.txt
+├── drizzle.config.ts [binary]
+├── eslint.config.mjs
+├── next.config.ts [binary]
+├── package.json
+├── postcss.config.mjs
+├── README.md
+└── tsconfig.json
+
+
+--- FILE CONTENTS ---
+============================================================
+FILE: drizzle/meta/_journal.json
+============================================================
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1755778714044,
+      "tag": "0000_typical_captain_flint",
+      "breakpoints": true
+    }
+  ]
+}
+
+============================================================
+FILE: drizzle/meta/0000_snapshot.json
+============================================================
+{
+  "version": "6",
+  "dialect": "sqlite",
+  "id": "7b015acf-5865-4e85-b653-08c7ac10ec89",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "tables": {
+    "admins": {
+      "name": "admins",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "passwordHash": {
+          "name": "passwordHash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(unixepoch('now') * 1000)"
+        }
+      },
+      "indexes": {
+        "admins_email_unique": {
+          "name": "admins_email_unique",
+          "columns": [
+            "email"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "newsletter_emails": {
+      "name": "newsletter_emails",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(unixepoch('now') * 1000)"
+        }
+      },
+      "indexes": {
+        "newsletter_emails_email_unique": {
+          "name": "newsletter_emails_email_unique",
+          "columns": [
+            "email"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "order_items": {
+      "name": "order_items",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "orderId": {
+          "name": "orderId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "productId": {
+          "name": "productId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "nameSnapshot": {
+          "name": "nameSnapshot",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "priceCents": {
+          "name": "priceCents",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "qty": {
+          "name": "qty",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "size": {
+          "name": "size",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "color": {
+          "name": "color",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "order_items_orderId_orders_id_fk": {
+          "name": "order_items_orderId_orders_id_fk",
+          "tableFrom": "order_items",
+          "tableTo": "orders",
+          "columnsFrom": [
+            "orderId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "order_items_productId_products_id_fk": {
+          "name": "order_items_productId_products_id_fk",
+          "tableFrom": "order_items",
+          "tableTo": "products",
+          "columnsFrom": [
+            "productId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "orders": {
+      "name": "orders",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "customerName": {
+          "name": "customerName",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "phone": {
+          "name": "phone",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "wilaya": {
+          "name": "wilaya",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "address": {
+          "name": "address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "totalCents": {
+          "name": "totalCents",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'pending'"
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(unixepoch('now') * 1000)"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "product_images": {
+      "name": "product_images",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "productId": {
+          "name": "productId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "url": {
+          "name": "url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "width": {
+          "name": "width",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "height": {
+          "name": "height",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "alt": {
+          "name": "alt",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "product_images_productId_products_id_fk": {
+          "name": "product_images_productId_products_id_fk",
+          "tableFrom": "product_images",
+          "tableTo": "products",
+          "columnsFrom": [
+            "productId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "products": {
+      "name": "products",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "slug": {
+          "name": "slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "priceCents": {
+          "name": "priceCents",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "category": {
+          "name": "category",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "sizes": {
+          "name": "sizes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "colors": {
+          "name": "colors",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "inStock": {
+          "name": "inStock",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(unixepoch('now') * 1000)"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(unixepoch('now') * 1000)"
+        }
+      },
+      "indexes": {
+        "products_slug_unique": {
+          "name": "products_slug_unique",
+          "columns": [
+            "slug"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    }
+  },
+  "views": {},
+  "enums": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "indexes": {}
+  }
+}
+
+============================================================
+FILE: src/app/(admin)/admin/login/page.tsx
+============================================================
+"use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+
+export default function AdminLoginPage() {
+	const [error, setError] = useState<string | null>(null);
+	const router = useRouter();
+	async function onSubmit(formData: FormData) {
+		setError(null);
+		const res = await fetch("/api/auth/login", {
+			method: "POST",
+			headers: { "content-type": "application/json" },
+			body: JSON.stringify({ email: formData.get("email"), password: formData.get("password") }),
+		});
+		if (res.ok) router.push("/admin/products"); else setError("Invalid credentials");
+	}
+	return (
+		<main className="min-h-screen bg-black text-white flex items-center justify-center px-6">
+			<form action={onSubmit} className="w-full max-w-sm space-y-4">
+				<h1 className="font-serif text-4xl mb-6 text-center">Admin</h1>
+				<input name="email" type="email" required placeholder="Email" className="w-full bg-black border border-white/20 px-4 py-3" />
+				<input name="password" type="password" required placeholder="Password" className="w-full bg-black border border-white/20 px-4 py-3" />
+				<button className="w-full border border-white px-6 py-3 uppercase tracking-widest hover:bg-white hover:text-black">Login</button>
+				{error && <p className="text-sm text-red-400">{error}</p>}
+			</form>
+		</main>
+	);
+} 
+
+============================================================
+FILE: src/app/(admin)/admin/orders/page.tsx
+============================================================
+"use client";
+import useSWR from "swr";
+import { http } from "@/lib/http";
+
+const fetcher = (url: string) => http.get(url).then((r) => r.data);
+
+export default function AdminOrdersPage() {
+	const { data, mutate } = useSWR<any[]>("/api/orders", fetcher);
+	async function updateStatus(id: number, status: string) {
+		await http.patch(`/api/orders/${id}`, { status });
+		mutate();
+	}
+	return (
+		<main className="min-h-screen bg-black text-white px-6 md:px-10 xl:px-20 py-12">
+			<h1 className="font-serif text-4xl mb-6">Orders</h1>
+			<table className="w-full text-sm">
+				<thead className="text-left text-neutral-400">
+					<tr>
+						<th className="py-2">ID</th>
+						<th>Customer</th>
+						<th>Total</th>
+						<th>Status</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					{data?.map((o) => (
+						<tr key={o.id} className="border-t border-white/10">
+							<td className="py-2">{o.id}</td>
+							<td>{o.customerName}</td>
+							<td>{(o.totalCents / 100).toFixed(2)} €</td>
+							<td>{o.status}</td>
+							<td>
+								<select className="bg-black border border-white/20 px-2 py-1" defaultValue={o.status} onChange={(e) => updateStatus(o.id, e.target.value)}>
+									{["pending","confirmed","shipped","delivered","cancelled"].map((s) => (
+										<option key={s} value={s}>{s}</option>
+									))}
+								</select>
+							</td>
+						</tr>
+					))}
+				</tbody>
+			</table>
+		</main>
+	);
+} 
+
+============================================================
+FILE: src/app/(admin)/admin/products/[id]/edit/page.tsx
+============================================================
+"use client";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+
+export default function EditProductPage({ params }: { params: { id: string } }) {
+	const router = useRouter();
+	const [status, setStatus] = useState<string | null>(null);
+	const [form, setForm] = useState({ slug: "", name: "", description: "", priceCents: 0, category: "", sizes: "XS,S,M,L", colors: "Black,White", inStock: true });
+
+	async function onSubmit(e: React.FormEvent) {
+		e.preventDefault();
+		const payload = {
+			slug: form.slug,
+			name: form.name,
+			description: form.description,
+			priceCents: Number(form.priceCents),
+			category: form.category,
+			sizes: form.sizes.split(",").map((s) => s.trim()).filter(Boolean),
+			colors: form.colors.split(",").map((s) => s.trim()).filter(Boolean),
+			inStock: form.inStock,
+			images: [],
+		};
+		const res = await fetch(`/api/products/${params.id}`, { method: "PATCH", body: JSON.stringify(payload) });
+		setStatus(res.ok ? "Saved" : "Failed");
+	}
+
+	return (
+		<main className="min-h-screen bg-black text-white px-6 md:px-10 xl:px-20 py-12">
+			<h1 className="font-serif text-4xl mb-6">Edit Product</h1>
+			<form onSubmit={onSubmit} className="grid md:grid-cols-2 gap-6">
+				<input value={form.slug} onChange={(e) => setForm({ ...form, slug: e.target.value })} name="slug" placeholder="slug" className="bg-black border border-white/20 px-4 py-3" />
+				<input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} name="name" placeholder="name" className="bg-black border border-white/20 px-4 py-3" />
+				<input value={form.priceCents} onChange={(e) => setForm({ ...form, priceCents: Number(e.target.value) })} name="priceCents" placeholder="priceCents" type="number" className="bg-black border border-white/20 px-4 py-3" />
+				<input value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} name="category" placeholder="category" className="bg-black border border-white/20 px-4 py-3" />
+				<input value={form.sizes} onChange={(e) => setForm({ ...form, sizes: e.target.value })} name="sizes" placeholder="sizes (comma separated)" className="bg-black border border-white/20 px-4 py-3" />
+				<input value={form.colors} onChange={(e) => setForm({ ...form, colors: e.target.value })} name="colors" placeholder="colors (comma separated)" className="bg-black border border-white/20 px-4 py-3" />
+				<label className="flex items-center gap-2 text-sm"><input checked={form.inStock} onChange={(e) => setForm({ ...form, inStock: e.target.checked })} type="checkbox" name="inStock" /> In stock</label>
+				<textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} name="description" placeholder="description" className="md:col-span-2 h-40 bg-black border border-white/20 px-4 py-3" />
+				<button className="border border-white px-6 py-3 uppercase tracking-widest hover:bg-white hover:text-black">Save</button>
+				{status && <p className="text-sm text-neutral-400">{status}</p>}
+			</form>
+		</main>
+	);
+} 
+
+============================================================
+FILE: src/app/(admin)/admin/products/new/page.tsx
+============================================================
+"use client";
+import { useState } from "react";
+
+export default function NewProductPage() {
+	const [status, setStatus] = useState<string | null>(null);
+	const [form, setForm] = useState({ slug: "", name: "", description: "", priceCents: 0, category: "", sizes: "XS,S,M,L", colors: "Black,White", inStock: true });
+
+	async function onSubmit(e: React.FormEvent) {
+		e.preventDefault();
+		const payload = {
+			slug: form.slug,
+			name: form.name,
+			description: form.description,
+			priceCents: Number(form.priceCents),
+			category: form.category,
+			sizes: form.sizes.split(",").map((s) => s.trim()).filter(Boolean),
+			colors: form.colors.split(",").map((s) => s.trim()).filter(Boolean),
+			inStock: form.inStock,
+			images: [],
+		};
+		const res = await fetch(`/api/products`, { method: "POST", body: JSON.stringify(payload) });
+		setStatus(res.ok ? "Created" : "Failed");
+	}
+
+	return (
+		<main className="min-h-screen bg-black text-white px-6 md:px-10 xl:px-20 py-12">
+			<h1 className="font-serif text-4xl mb-6">New Product</h1>
+			<form onSubmit={onSubmit} className="grid md:grid-cols-2 gap-6">
+				<input value={form.slug} onChange={(e) => setForm({ ...form, slug: e.target.value })} name="slug" placeholder="slug" className="bg-black border border-white/20 px-4 py-3" />
+				<input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} name="name" placeholder="name" className="bg-black border border-white/20 px-4 py-3" />
+				<input value={form.priceCents} onChange={(e) => setForm({ ...form, priceCents: Number(e.target.value) })} name="priceCents" placeholder="priceCents" type="number" className="bg-black border border-white/20 px-4 py-3" />
+				<input value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} name="category" placeholder="category" className="bg-black border border-white/20 px-4 py-3" />
+				<input value={form.sizes} onChange={(e) => setForm({ ...form, sizes: e.target.value })} name="sizes" placeholder="sizes (comma separated)" className="bg-black border border-white/20 px-4 py-3" />
+				<input value={form.colors} onChange={(e) => setForm({ ...form, colors: e.target.value })} name="colors" placeholder="colors (comma separated)" className="bg-black border border-white/20 px-4 py-3" />
+				<label className="flex items-center gap-2 text-sm"><input checked={form.inStock} onChange={(e) => setForm({ ...form, inStock: e.target.checked })} type="checkbox" name="inStock" /> In stock</label>
+				<textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} name="description" placeholder="description" className="md:col-span-2 h-40 bg-black border border-white/20 px-4 py-3" />
+				<button className="border border-white px-6 py-3 uppercase tracking-widest hover:bg-white hover:text-black">Create</button>
+				{status && <p className="text-sm text-neutral-400">{status}</p>}
+			</form>
+		</main>
+	);
+} 
+
+============================================================
+FILE: src/app/(admin)/admin/products/page.tsx
+============================================================
+import Link from "next/link";
+import { db } from "@/db";
+import { products } from "@/db/schema";
+
+export default function AdminProductsPage() {
+	const list = db.select().from(products).all();
+	return (
+		<main className="min-h-screen bg-black text-white px-6 md:px-10 xl:px-20 py-12">
+			<header className="flex items-center justify-between mb-8">
+				<h1 className="font-serif text-4xl">Products</h1>
+				<Link href="/admin/products/new" className="border border-white px-4 py-2 uppercase tracking-widest hover:bg-white hover:text-black">New</Link>
+			</header>
+			<table className="w-full text-sm">
+				<thead className="text-left text-neutral-400">
+					<tr>
+						<th className="py-2">ID</th>
+						<th>Name</th>
+						<th>Price</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					{list.map((p) => (
+						<tr key={p.id} className="border-t border-white/10">
+							<td className="py-2">{p.id}</td>
+							<td>{p.name}</td>
+							<td>{(p.priceCents / 100).toFixed(2)} €</td>
+							<td className="text-right"><Link href={`/admin/products/${p.id}/edit`} className="underline">Edit</Link></td>
+						</tr>
+					))}
+				</tbody>
+			</table>
+		</main>
+	);
+} 
+
+============================================================
+FILE: src/app/[locale]/admin/login/page.tsx
+============================================================
+"use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+
+export default function AdminLoginPage() {
+	const [error, setError] = useState<string | null>(null);
+	const router = useRouter();
+	async function onSubmit(formData: FormData) {
+		setError(null);
+		const res = await fetch("/api/auth/login", {
+			method: "POST",
+			headers: { "content-type": "application/json" },
+			body: JSON.stringify({ email: formData.get("email"), password: formData.get("password") }),
+		});
+		if (res.ok) router.push("/admin/products"); else setError("Invalid credentials");
+	}
+	return (
+		<main className="min-h-screen bg-black text-white flex items-center justify-center px-6">
+			<form action={onSubmit} className="w-full max-w-sm space-y-4">
+				<h1 className="font-serif text-4xl mb-6 text-center">Admin</h1>
+				<input name="email" type="email" required placeholder="Email" className="w-full bg-black border border-white/20 px-4 py-3" />
+				<input name="password" type="password" required placeholder="Password" className="w-full bg-black border border-white/20 px-4 py-3" />
+				<button className="w-full border border-white px-6 py-3 uppercase tracking-widest hover:bg-white hover:text-black">Login</button>
+				{error && <p className="text-sm text-red-400">{error}</p>}
+			</form>
+		</main>
+	);
+} 
+
+============================================================
+FILE: src/app/[locale]/cart/page.tsx
+============================================================
+"use client";
+import { useEffect, useMemo } from "react";
+import Link from "next/link";
+import { useCartStore } from "@/store/cart";
+
+export default function CartPage() {
+	const { items, hydrated, load, clear } = useCartStore();
+	useEffect(() => {
+		load();
+	}, [load]);
+	const total = useMemo(() => items.reduce((sum, i) => sum + i.priceCents * i.qty, 0), [items]);
+	if (!hydrated) return null;
+	return (
+		<main className="px-6 md:px-10 xl:px-20 py-16 bg-black text-white">
+			<h1 className="font-serif text-5xl mb-8">Cart</h1>
+			{items.length === 0 ? (
+				<div>
+					<p className="text-neutral-400">Your cart is empty.</p>
+					<Link href="../shop" className="inline-block mt-4 border border-white px-6 py-3 uppercase tracking-widest hover:bg-white hover:text-black">Continue shopping</Link>
+				</div>
+			) : (
+				<div className="grid md:grid-cols-3 gap-8">
+					<div className="md:col-span-2 space-y-6">
+						{items.map((i) => (
+							<div key={`${i.productId}-${i.size}-${i.color}`} className="flex gap-4 items-center">
+								<div className="w-24 h-32 bg-neutral-900" />
+								<div className="flex-1">
+									<div className="font-medium">{i.name}</div>
+									<div className="text-neutral-400 text-sm">{i.size} {i.color}</div>
+								</div>
+								<div className="text-sm">× {i.qty}</div>
+								<div>{(i.priceCents / 100).toFixed(2)} €</div>
+							</div>
+						))}
+					</div>
+					<aside className="border border-white/20 p-6 self-start">
+						<div className="flex justify-between text-sm text-neutral-400">
+							<span>Subtotal</span>
+							<span>{(total / 100).toFixed(2)} €</span>
+						</div>
+						<Link href="../checkout" className="mt-6 block text-center border border-white px-6 py-3 uppercase tracking-widest hover:bg-white hover:text-black">Checkout</Link>
+						<button onClick={clear} className="mt-3 block w-full text-center border border-white/30 px-6 py-3 uppercase tracking-widest hover:bg-white hover:text-black">Clear</button>
+					</aside>
+				</div>
+			)}
+		</main>
+	);
+} 
+
+============================================================
+FILE: src/app/[locale]/checkout/page.tsx
+============================================================
+"use client";
+import { FormEvent, useEffect, useMemo, useState } from "react";
+import { useCartStore } from "@/store/cart";
+
+export default function CheckoutPage() {
+	const { items, load, hydrated, clear } = useCartStore();
+	useEffect(() => {
+		load();
+	}, [load]);
+	const total = useMemo(() => items.reduce((sum, i) => sum + i.priceCents * i.qty, 0), [items]);
+	const [status, setStatus] = useState<string | null>(null);
+
+	async function onSubmit(e: FormEvent<HTMLFormElement>) {
+		e.preventDefault();
+		const form = e.currentTarget;
+		const formData = new FormData(form);
+		const payload = {
+			name: String(formData.get("name")),
+			phone: String(formData.get("phone")),
+			wilaya: String(formData.get("wilaya")),
+			address: String(formData.get("address")),
+			items: items.map((i) => ({ productId: i.productId, qty: i.qty, priceCents: i.priceCents, size: i.size, color: i.color })),
+		};
+		const res = await fetch("/api/orders", { method: "POST", body: JSON.stringify(payload) });
+		if (res.ok) {
+			const data = await res.json();
+			setStatus(`Order placed. Total ${(data.totalCents / 100).toFixed(2)} €`);
+			clear();
+		} else {
+			setStatus("Could not place order.");
+		}
+	}
+
+	if (!hydrated) return null;
+	return (
+		<main className="px-6 md:px-10 xl:px-20 py-16 bg-black text-white">
+			<h1 className="font-serif text-5xl mb-8">Checkout</h1>
+			<form onSubmit={onSubmit} className="grid md:grid-cols-3 gap-8">
+				<section className="md:col-span-2 space-y-4">
+					<input name="name" required placeholder="Name" className="w-full bg-black border border-white/20 px-4 py-3" />
+					<input name="phone" required placeholder="Phone" className="w-full bg-black border border-white/20 px-4 py-3" />
+					<input name="wilaya" required placeholder="Wilaya" className="w-full bg-black border border-white/20 px-4 py-3" />
+					<input name="address" required placeholder="Address" className="w-full bg-black border border-white/20 px-4 py-3" />
+					<button className="border border-white px-6 py-3 uppercase tracking-widest hover:bg-white hover:text-black">Place order</button>
+					{status && <p className="text-sm text-neutral-400">{status}</p>}
+				</section>
+				<aside className="border border-white/20 p-6 self-start">
+					<div className="flex justify-between text-sm text-neutral-400">
+						<span>Total</span>
+						<span>{(total / 100).toFixed(2)} €</span>
+					</div>
+				</aside>
+			</form>
+		</main>
+	);
+} 
+
+============================================================
+FILE: src/app/[locale]/product/[slug]/page.tsx
+============================================================
+import { db } from "@/db";
+import { products } from "@/db/schema";
+import { eq } from "drizzle-orm";
+import { notFound } from "next/navigation";
+
+export default function ProductPage({ params }: { params: { slug: string } }) {
+	const [p] = db.select().from(products).where(eq(products.slug, params.slug)).all();
+	if (!p) notFound();
+	return (
+		<main className="px-6 md:px-10 xl:px-20 py-16 bg-black text-white">
+			<div className="grid md:grid-cols-2 gap-12">
+				<div className="aspect-[3/4] bg-neutral-900">
+					<img src={`https://picsum.photos/seed/${p.slug}/1200/1600`} alt={p.name} className="w-full h-full object-cover" />
+				</div>
+				<div>
+					<h1 className="font-serif text-5xl mb-3">{p.name}</h1>
+					<div className="text-neutral-400 mb-8">{(p.priceCents / 100).toFixed(2)} €</div>
+					<div className="space-y-6">
+						<div>
+							<div className="uppercase text-sm tracking-widest mb-2">Size</div>
+							<div className="flex gap-2">
+								{(p.sizes as unknown as string[]).map((s) => (
+									<button key={s} className="border border-white/30 px-3 py-2 text-sm hover:bg-white hover:text-black transition-colors">{s}</button>
+								))}
+							</div>
+						</div>
+						<div>
+							<div className="uppercase text-sm tracking-widest mb-2">Color</div>
+							<div className="flex gap-2">
+								{(p.colors as unknown as string[]).map((c) => (
+									<button key={c} className="border border-white/30 px-3 py-2 text-sm hover:bg-white hover:text-black transition-colors">{c}</button>
+								))}
+							</div>
+						</div>
+						<button className="mt-6 border border-white px-6 py-3 uppercase tracking-widest hover:bg-white hover:text-black transition-colors">Add to cart</button>
+					</div>
+					<p className="text-neutral-300 mt-10 leading-relaxed">{p.description}</p>
+				</div>
+			</div>
+		</main>
+	);
+} 
+
+============================================================
+FILE: src/app/[locale]/shop/page.tsx
+============================================================
+import Link from "next/link";
+import { db } from "@/db";
+import { products, productImages } from "@/db/schema";
+
+export default function ShopPage() {
+	const list = db.select().from(products).all();
+	return (
+		<main className="px-6 md:px-10 xl:px-20 py-16 bg-black text-white">
+			<header className="flex items-end justify-between mb-10">
+				<h1 className="font-serif text-5xl">Shop</h1>
+				<div className="flex gap-3">
+					<input placeholder="Search" className="bg-black border border-white/20 px-4 py-2" />
+					<select className="bg-black border border-white/20 px-4 py-2"><option>All categories</option></select>
+				</div>
+			</header>
+			<div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+				{list.map((p) => (
+					<Link href={`./product/${p.slug}`} key={p.id} className="group">
+						<div className="aspect-[3/4] bg-neutral-900 overflow-hidden">
+							<img src={`https://picsum.photos/seed/${p.slug}/900/1200`} alt={p.name} className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
+						</div>
+						<div className="mt-3 text-sm tracking-wide">{p.name}</div>
+						<div className="text-neutral-400 text-sm">{(p.priceCents / 100).toFixed(2)} €</div>
+					</Link>
+				))}
+			</div>
+		</main>
+	);
+} 
+
+============================================================
+FILE: src/app/[locale]/layout.tsx
+============================================================
+import type { Metadata } from "next";
+import { NextIntlClientProvider } from "next-intl";
+import { notFound } from "next/navigation";
+import "../globals.css";
+import { Cormorant_Garamond, Inter } from "next/font/google";
+
+export const metadata: Metadata = {
+	title: "Amigo",
+	description: "Amigo - Luxury womenswear",
+};
+
+export const locales = ["fr", "en", "ar"] as const;
+export type Locale = (typeof locales)[number];
+
+const serif = Cormorant_Garamond({ subsets: ["latin"], weight: ["400", "500", "600", "700"] });
+const sans = Inter({ subsets: ["latin"] });
+
+async function getMessages(locale: string) {
+	try {
+		const messages = (await import(`@/locales/${locale}/common.json`)).default;
+		return messages;
+	} catch (error) {
+		return null;
+	}
+}
+
+export default async function LocaleLayout({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
+	const resolved = await params;
+	const locale = resolved.locale;
+	if (!locales.includes(locale as Locale)) notFound();
+	const messages = await getMessages(locale);
+	if (!messages) notFound();
+	const dir = locale === "ar" ? "rtl" : "ltr";
+	return (
+		<html lang={locale} dir={dir} className={`${serif.className} ${sans.className} bg-black text-white`}>
+			<body className="antialiased">
+				<NextIntlClientProvider locale={locale} messages={messages}>{children}</NextIntlClientProvider>
+			</body>
+		</html>
+	);
+} 
+
+============================================================
+FILE: src/app/[locale]/page.tsx
+============================================================
+"use client";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { useTranslations, useLocale } from "next-intl";
+
+export default function LandingPage() {
+	const t = useTranslations();
+	const locale = useLocale();
+	return (
+		<main className="min-h-screen bg-black text-white">
+			<section className="relative h-[90vh] flex items-center justify-center">
+				<motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="text-[18vw] leading-none tracking-tight font-serif">
+					{t("brand")}
+				</motion.h1>
+				<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }} className="absolute bottom-16">
+					<Link href={`/${locale}/shop`} className="border border-white px-6 py-3 uppercase tracking-widest hover:bg-white hover:text-black transition-colors">{t("cta_explore")}</Link>
+				</motion.div>
+			</section>
+
+			<section className="px-6 md:px-10 xl:px-20 py-24 grid md:grid-cols-2 gap-16">
+				<div className="prose prose-invert max-w-none">
+					<h2 className="font-serif text-4xl">{t("story_title")}</h2>
+					<p className="text-neutral-300 text-lg">Crafted silhouettes, enduring materials, and quiet confidence. Amigo celebrates modern femininity with editorial minimalism.</p>
+				</div>
+				<div className="grid grid-cols-2 gap-4">
+					<div className="aspect-[3/4] overflow-hidden">
+						<img src="https://picsum.photos/seed/hero1/800/1200" alt="Featured 1" className="w-full h-full object-cover" />
+					</div>
+					<div className="aspect-[3/4] overflow-hidden mt-10">
+						<img src="https://picsum.photos/seed/hero2/800/1200" alt="Featured 2" className="w-full h-full object-cover" />
+					</div>
+				</div>
+			</section>
+
+			<section className="px-6 md:px-10 xl:px-20 py-24">
+				<h3 className="font-serif text-3xl mb-10">Featured Collections</h3>
+				<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+					{["silk", "linen", "cashmere"].map((k) => (
+						<div key={k} className="group">
+							<div className="aspect-[3/4] overflow-hidden bg-neutral-900">
+								<img src={`https://picsum.photos/seed/${k}/900/1200`} alt={k} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+							</div>
+							<div className="mt-3 text-sm uppercase tracking-widest text-neutral-400">{k}</div>
+						</div>
+					))}
+				</div>
+			</section>
+
+			<section className="px-6 md:px-10 xl:px-20 py-24">
+				<h3 className="font-serif text-3xl mb-10">Testimonials</h3>
+				<div className="grid md:grid-cols-3 gap-8 text-neutral-300">
+					<blockquote>“Effortless elegance. Every piece feels intentional.”</blockquote>
+					<blockquote>“The fabrics are impeccable, the cuts are timeless.”</blockquote>
+					<blockquote>“My new wardrobe staples.”</blockquote>
+				</div>
+			</section>
+
+			<section className="px-6 md:px-10 xl:px-20 py-24 border-t border-white/10">
+				<div className="flex flex-col md:flex-row items-center justify-between gap-6">
+					<h3 className="font-serif text-3xl">{t("newsletter_cta")}</h3>
+					<form action="/api/newsletter" method="post" className="flex w-full md:w-auto">
+						<input name="email" type="email" required placeholder="email" className="bg-black border border-white/20 px-4 py-3 w-full md:w-80 placeholder:text-neutral-500" />
+						<button className="border border-white px-6 py-3 uppercase tracking-widest hover:bg-white hover:text-black transition-colors">Sign up</button>
+					</form>
+				</div>
+			</section>
+
+			<footer className="px-6 md:px-10 xl:px-20 py-12 flex items-center justify-between text-sm text-neutral-400">
+				<div>© {new Date().getFullYear()} Amigo</div>
+				<nav className="flex gap-6">
+					<Link href="/fr">FR</Link>
+					<Link href="/en">EN</Link>
+					<Link href="/ar">AR</Link>
+				</nav>
+			</footer>
+		</main>
+	);
+} 
+
+============================================================
+FILE: src/app/globals.css
+============================================================
+@import "tailwindcss";
+
+:root {
+  --background: #000000;
+  --foreground: #ffffff;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.font-serif {
+  font-family: "Cormorant Garamond", "Playfair Display", serif;
+}
+
+.font-sans {
+  font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+img { display: block; }
+
+
+============================================================
+FILE: src/app/layout.tsx
+============================================================
+import type { Metadata } from "next";
+import "./globals.css";
+import Providers from "@/components/Providers";
+
+export const metadata: Metadata = {
+	title: "Amigo",
+	description: "Amigo e-commerce",
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+	return (
+		<html lang="fr">
+			<body>
+				<Providers>{children}</Providers>
+			</body>
+		</html>
+	);
+}
+
+
+============================================================
+FILE: src/app/page.tsx
+============================================================
+import { redirect } from "next/navigation";
+
+export default function Home() {
+	redirect("/fr");
+}
+
+
+============================================================
+FILE: src/components/Providers.tsx
+============================================================
+"use client";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useState } from "react";
+
+export default function Providers({ children }: { children: React.ReactNode }) {
+	const [client] = useState(() => new QueryClient());
+	return <QueryClientProvider client={client}>{children}</QueryClientProvider>;
+} 
+
+============================================================
+FILE: src/locales/ar/common.json
+============================================================
+{
+	"brand": "أميغو",
+	"cta_explore": "استكشف المجموعة",
+	"story_title": "فلسفتنا",
+	"newsletter_cta": "اشترك في النشرة البريدية",
+	"shop": "المتجر",
+	"cart": "السلة",
+	"checkout": "الدفع",
+	"admin": "الإدارة",
+	"language": "اللغة",
+	"login": "تسجيل الدخول",
+	"logout": "تسجيل الخروج"
+} 
+
+============================================================
+FILE: src/locales/en/common.json
+============================================================
+{
+	"brand": "Amigo",
+	"cta_explore": "Explore Collection",
+	"story_title": "Our Philosophy",
+	"newsletter_cta": "Join the newsletter",
+	"shop": "Shop",
+	"cart": "Cart",
+	"checkout": "Checkout",
+	"admin": "Admin",
+	"language": "Language",
+	"login": "Login",
+	"logout": "Logout"
+} 
+
+============================================================
+FILE: src/locales/fr/common.json
+============================================================
+{
+	"brand": "Amigo",
+	"cta_explore": "Explorer la collection",
+	"story_title": "Notre philosophie",
+	"newsletter_cta": "Inscrivez-vous à la newsletter",
+	"shop": "Boutique",
+	"cart": "Panier",
+	"checkout": "Paiement",
+	"admin": "Admin",
+	"language": "Langue",
+	"login": "Connexion",
+	"logout": "Déconnexion"
+} 
+
+============================================================
+FILE: amigo_cursor_prompt.txt
+============================================================
+
+# CURSOR PROMPT FOR AMIGO E-COMMERCE PLATFORM
+
+You are an expert full-stack engineer and designer. Create a **production-grade e-commerce platform** named **Amigo** for women’s clothing with a **luxury, chic brand identity**. 
+
+## Tech Stack
+- Next.js (App Router) + TypeScript
+- pnpm package manager
+- Tailwind CSS for styling
+- Framer Motion for animations
+- Axios for API calls with interceptors
+- React Query (TanStack Query) for data fetching/caching
+- Zustand for client state management (cart, UI state)
+- Drizzle ORM + SQLite via better-sqlite3 (numeric IDs, not UUIDs)
+- Zod for validation
+- next-intl for i18n (languages: fr (default), en, ar) with RTL support for Arabic
+- IndexedDB (via idb-keyval) to persist cart
+- Cloudinary for product image hosting (signed upload flow)
+- Nodemailer for email (enabled by env flag)
+- JWT auth (email/password) for admin, HTTP-only cookie
+- bcrypt for password hashing
+
+## Brand Identity & Styling
+- Palette: strictly black & white (grayscale), with colored product images as the only color accent.
+- Typography: luxury serif for headings (e.g., Playfair Display, Cormorant Garamond), modern sans-serif (e.g., Inter) for body text.
+- Layout: editorial, magazine-inspired design with whitespace and strong hierarchy.
+- Animations: smooth Framer Motion scroll reveals, parallax hero, hover fades.
+- Admin panel: same black/white minimal luxury style, functional.
+
+## Features
+1. Landing Page (luxury, long-form)
+   - Hero: fullscreen, black background, bold serif headline “Amigo”, CTA “Explore Collection”
+   - Story/About: editorial text about brand philosophy
+   - Featured Collections: grid with colored images, hover zoom animations
+   - Testimonials section
+   - Newsletter signup (store emails in DB)
+   - Footer with minimal links + language switcher
+
+2. Catalog & Product Pages
+   - Shop grid with filtering (category, size, price range) + search
+   - Product detail page: multiple images, size/color selectors, add to cart
+
+3. Cart & Checkout
+   - Cart stored in IndexedDB, hydrated into Zustand
+   - Checkout form (guest): name, phone, wilaya, address
+   - Orders stored in DB and visible in Admin panel
+
+4. Orders
+   - DB stores order + items with product snapshots
+   - Admin can view and update order status (pending, confirmed, shipped, delivered, cancelled)
+
+5. Admin Panel (/admin)
+   - Login with email/password (bcrypt + JWT in cookie)
+   - CRUD products with Cloudinary image upload
+   - Manage orders (view, filter, update status)
+
+6. Internationalization
+   - Default: French
+   - Toggle: English, Arabic
+   - RTL layout for Arabic
+   - Strings extracted into locales/*
+
+7. Database Schema (Drizzle, SQLite)
+   - products: id int pk autoincrement, slug, name, description, priceCents, category, sizes, colors, inStock, createdAt, updatedAt
+   - product_images: id, productId fk, url, width, height, alt
+   - orders: id, customerName, phone, wilaya, address, totalCents, status, createdAt
+   - order_items: id, orderId fk, productId fk, nameSnapshot, priceCents, qty, size, color
+   - admins: id, email unique, passwordHash, createdAt
+
+8. Environment Variables (.env.example)
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+DATABASE_URL=file:./amigo.db
+JWT_SECRET=replace_with_strong_secret
+JWT_EXPIRES_IN=7d
+ADMIN_EMAIL=admin@amigo.com
+ADMIN_PASSWORD=ChangeMe_123
+CLOUDINARY_CLOUD_NAME=xxx
+CLOUDINARY_API_KEY=xxx
+CLOUDINARY_API_SECRET=xxx
+CLOUDINARY_UPLOAD_FOLDER=amigo/products
+ENABLE_EMAIL=true
+SMTP_HOST=smtp.example.com
+SMTP_PORT=587
+SMTP_USER=user
+SMTP_PASS=pass
+SMTP_FROM="Amigo <no-reply@amigo.com>"
+
+9. Project Structure
+/src
+  /app
+    /(public)
+      /[locale]
+        /(landing)
+        /shop
+        /product/[slug]
+        /cart
+        /checkout
+        /api/auth/*
+        /api/products/*
+        /api/orders/*
+        /api/upload/sign
+    /(admin)
+      /admin/login
+      /admin/products
+      /admin/products/[id]/edit
+      /admin/orders
+  /components
+  /features
+  /db
+  /lib
+  /store
+  /locales/{fr,en,ar}
+
+10. Deliverables
+- Complete runnable repo with black/white theme and colored images
+- Responsive design
+- Smooth animations (Framer Motion)
+- Admin panel styled to match brand
+- Language switcher (fr/en/ar)
+- `.env.example` included
+- `README.md` with setup + commands
+
+## RULES TO FOLLOW
+- Always use integer IDs in DB (autoincrement), never UUID.
+- Enforce Zod validation on all inputs (products, checkout, login).
+- Admin routes protected via JWT in HTTP-only cookies, middleware enforced.
+- Never trust client price — recalc order totals server-side.
+- Store cart in IndexedDB + hydrate via Zustand on app load.
+- Apply RTL styling when locale=ar.
+- Brand styling (black/white, luxury serif headings) must be consistent everywhere, including admin panel.
+- Use smooth Framer Motion animations, no jarring effects.
+- Extract all text into i18n files under locales/{fr,en,ar}.
+- Secure cookies, bcrypt hashing for passwords, strong JWT secret.
+- Provide setup and seed scripts for DB (with default admin and sample products).
+
+
+============================================================
+FILE: eslint.config.mjs
+============================================================
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import { FlatCompat } from "@eslint/eslintrc";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const compat = new FlatCompat({
+  baseDirectory: __dirname,
+});
+
+const eslintConfig = [
+  ...compat.extends("next/core-web-vitals", "next/typescript"),
+  {
+    ignores: [
+      "node_modules/**",
+      ".next/**",
+      "out/**",
+      "build/**",
+      "next-env.d.ts",
+    ],
+  },
+];
+
+export default eslintConfig;
+
+
+============================================================
+FILE: package.json
+============================================================
+{
+  "name": "amigo.shop",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build --turbopack",
+    "start": "next start",
+    "lint": "eslint",
+    "db:generate": "drizzle-kit generate --config=drizzle.config.ts",
+    "db:push": "drizzle-kit push --config=drizzle.config.ts",
+    "db:studio": "drizzle-kit studio --config=drizzle.config.ts",
+    "db:seed": "tsx scripts/seed.ts"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.85.5",
+    "axios": "^1.11.0",
+    "bcrypt": "^6.0.0",
+    "better-sqlite3": "^12.2.0",
+    "cloudinary": "^2.7.0",
+    "drizzle-orm": "^0.44.4",
+    "framer-motion": "^12.23.12",
+    "idb-keyval": "^6.2.2",
+    "jose": "^6.0.12",
+    "next": "15.5.0",
+    "next-intl": "^4.3.5",
+    "nodemailer": "^7.0.5",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "zod": "^4.0.17",
+    "zustand": "^5.0.8"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "dotenv": "^17.2.1",
+    "drizzle-kit": "^0.31.4",
+    "eslint": "^9",
+    "eslint-config-next": "15.5.0",
+    "tailwindcss": "^4",
+    "tsx": "^4.20.4",
+    "typescript": "^5"
+  },
+  "pnpm": {
+    "ignoredBuiltDependencies": [
+      "esbuild"
+    ],
+    "allowedBuiltDependencies": [
+      "better-sqlite3",
+      "bcrypt",
+      "sharp"
+    ]
+  }
+}
+
+
+============================================================
+FILE: postcss.config.mjs
+============================================================
+const config = {
+  plugins: ["@tailwindcss/postcss"],
+};
+
+export default config;
+
+
+============================================================
+FILE: README.md
+============================================================
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+## Getting Started
+
+First, run the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+============================================================
+FILE: tsconfig.json
+============================================================
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}

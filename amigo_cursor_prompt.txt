@@ -1,0 +1,134 @@
+
+# CURSOR PROMPT FOR AMIGO E-COMMERCE PLATFORM
+
+You are an expert full-stack engineer and designer. Create a **production-grade e-commerce platform** named **Amigo** for women’s clothing with a **luxury, chic brand identity**. 
+
+## Tech Stack
+- Next.js (App Router) + TypeScript
+- pnpm package manager
+- Tailwind CSS for styling
+- Framer Motion for animations
+- Axios for API calls with interceptors
+- React Query (TanStack Query) for data fetching/caching
+- Zustand for client state management (cart, UI state)
+- Drizzle ORM + SQLite via better-sqlite3 (numeric IDs, not UUIDs)
+- Zod for validation
+- next-intl for i18n (languages: fr (default), en, ar) with RTL support for Arabic
+- IndexedDB (via idb-keyval) to persist cart
+- Cloudinary for product image hosting (signed upload flow)
+- Nodemailer for email (enabled by env flag)
+- JWT auth (email/password) for admin, HTTP-only cookie
+- bcrypt for password hashing
+
+## Brand Identity & Styling
+- Palette: strictly black & white (grayscale), with colored product images as the only color accent.
+- Typography: luxury serif for headings (e.g., Playfair Display, Cormorant Garamond), modern sans-serif (e.g., Inter) for body text.
+- Layout: editorial, magazine-inspired design with whitespace and strong hierarchy.
+- Animations: smooth Framer Motion scroll reveals, parallax hero, hover fades.
+- Admin panel: same black/white minimal luxury style, functional.
+
+## Features
+1. Landing Page (luxury, long-form)
+   - Hero: fullscreen, black background, bold serif headline “Amigo”, CTA “Explore Collection”
+   - Story/About: editorial text about brand philosophy
+   - Featured Collections: grid with colored images, hover zoom animations
+   - Testimonials section
+   - Newsletter signup (store emails in DB)
+   - Footer with minimal links + language switcher
+
+2. Catalog & Product Pages
+   - Shop grid with filtering (category, size, price range) + search
+   - Product detail page: multiple images, size/color selectors, add to cart
+
+3. Cart & Checkout
+   - Cart stored in IndexedDB, hydrated into Zustand
+   - Checkout form (guest): name, phone, wilaya, address
+   - Orders stored in DB and visible in Admin panel
+
+4. Orders
+   - DB stores order + items with product snapshots
+   - Admin can view and update order status (pending, confirmed, shipped, delivered, cancelled)
+
+5. Admin Panel (/admin)
+   - Login with email/password (bcrypt + JWT in cookie)
+   - CRUD products with Cloudinary image upload
+   - Manage orders (view, filter, update status)
+
+6. Internationalization
+   - Default: French
+   - Toggle: English, Arabic
+   - RTL layout for Arabic
+   - Strings extracted into locales/*
+
+7. Database Schema (Drizzle, SQLite)
+   - products: id int pk autoincrement, slug, name, description, priceCents, category, sizes, colors, inStock, createdAt, updatedAt
+   - product_images: id, productId fk, url, width, height, alt
+   - orders: id, customerName, phone, wilaya, address, totalCents, status, createdAt
+   - order_items: id, orderId fk, productId fk, nameSnapshot, priceCents, qty, size, color
+   - admins: id, email unique, passwordHash, createdAt
+
+8. Environment Variables (.env.example)
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+DATABASE_URL=file:./amigo.db
+JWT_SECRET=replace_with_strong_secret
+JWT_EXPIRES_IN=7d
+ADMIN_EMAIL=admin@amigo.com
+ADMIN_PASSWORD=ChangeMe_123
+CLOUDINARY_CLOUD_NAME=xxx
+CLOUDINARY_API_KEY=xxx
+CLOUDINARY_API_SECRET=xxx
+CLOUDINARY_UPLOAD_FOLDER=amigo/products
+ENABLE_EMAIL=true
+SMTP_HOST=smtp.example.com
+SMTP_PORT=587
+SMTP_USER=user
+SMTP_PASS=pass
+SMTP_FROM="Amigo <no-reply@amigo.com>"
+
+9. Project Structure
+/src
+  /app
+    /(public)
+      /[locale]
+        /(landing)
+        /shop
+        /product/[slug]
+        /cart
+        /checkout
+        /api/auth/*
+        /api/products/*
+        /api/orders/*
+        /api/upload/sign
+    /(admin)
+      /admin/login
+      /admin/products
+      /admin/products/[id]/edit
+      /admin/orders
+  /components
+  /features
+  /db
+  /lib
+  /store
+  /locales/{fr,en,ar}
+
+10. Deliverables
+- Complete runnable repo with black/white theme and colored images
+- Responsive design
+- Smooth animations (Framer Motion)
+- Admin panel styled to match brand
+- Language switcher (fr/en/ar)
+- `.env.example` included
+- `README.md` with setup + commands
+
+## RULES TO FOLLOW
+- Always use integer IDs in DB (autoincrement), never UUID.
+- Enforce Zod validation on all inputs (products, checkout, login).
+- Admin routes protected via JWT in HTTP-only cookies, middleware enforced.
+- Never trust client price — recalc order totals server-side.
+- Store cart in IndexedDB + hydrate via Zustand on app load.
+- Apply RTL styling when locale=ar.
+- Brand styling (black/white, luxury serif headings) must be consistent everywhere, including admin panel.
+- Use smooth Framer Motion animations, no jarring effects.
+- Extract all text into i18n files under locales/{fr,en,ar}.
+- Secure cookies, bcrypt hashing for passwords, strong JWT secret.
+- Provide setup and seed scripts for DB (with default admin and sample products).
