@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { db } from "@/db";
 import { products } from "@/db/schema";
+import AdminProductActions from "@/components/AdminProductActions";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -29,7 +30,9 @@ export default async function AdminProductsPage() {
 							<td className="py-2">{p.id}</td>
 							<td>{p.name}</td>
 							<td>{(p.priceCents / 100).toFixed(2)} DA</td>
-							<td className="text-right"><Link href={`/admin/products/${p.id}/edit`} className="underline">Edit</Link></td>
+							<td className="text-right">
+								<AdminProductActions id={p.id} name={p.name} />
+							</td>
 						</tr>
 					))}
 				</tbody>

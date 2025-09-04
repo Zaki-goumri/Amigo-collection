@@ -1,3 +1,4 @@
+
 "use client";
 import { useEffect, useState } from "react";
 import ImageUploader from "@/components/ImageUploader";
@@ -25,6 +26,7 @@ export default function EditProductPage({ params }: { params: { id: string } }) 
 		const res = await fetch(`/api/products/${params.id}`, { method: "PATCH", body: JSON.stringify(payload) });
 		setStatus(res.ok ? "Saved" : "Failed");
 	}
+
 	return (
 		<main className="min-h-screen bg-black text-white px-6 md:px-10 xl:px-20 py-12">
 			<h1 className="font-serif text-4xl mb-6">Edit Product</h1>
@@ -41,9 +43,10 @@ export default function EditProductPage({ params }: { params: { id: string } }) 
 					<ImageUploader value={images} onChange={setImages} />
 				</div>
 				<textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} name="description" placeholder="description" className="md:col-span-2 h-40 bg-black border border-white/20 px-4 py-3" />
-				<button className="border border-white px-6 py-3 uppercase tracking-widest hover:bg-white hover:text-black">Save</button>
+				<button type="submit" className="border border-white px-6 py-3 uppercase tracking-widest hover:bg-white hover:text-black">Save</button>
 				{status && <p className="text-sm text-neutral-400">{status}</p>}
 			</form>
+
 		</main>
 	);
 } 

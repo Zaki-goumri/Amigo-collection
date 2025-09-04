@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/db";
-import { products, productImages } from "@/db/schema";
+import { products, productImages, orderItems } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 
@@ -44,7 +44,16 @@ export async function PATCH(req: NextRequest, context: { params: Promise<{ id: s
 
 export async function DELETE(_req: NextRequest, context: { params: Promise<{ id: string }> }) {
 	const { id } = await context.params;
+	
+	// First delete related order items (no cascade, so manual deletion required)
+	await db.delete(orderItems).where(eq(orderItems.productId, Number(id))).run();
+	
+	// Then delete related product images (cascade should handle this, but being explicit)
+	await db.delete(productImages).where(eq(productImages.productId, Number(id))).run();
+	
+	// Finally delete the product
 	const res: any = await db.delete(products).where(eq(products.id, Number(id))).run();
 	if (res.changes === 0) return NextResponse.json({ error: "Not found" }, { status: 404 });
+	
 	return NextResponse.json({ ok: true });
 } 

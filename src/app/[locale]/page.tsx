@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { useTranslations, useLocale } from "next-intl";
 
@@ -23,17 +24,48 @@ export default function LandingPage() {
 					<p className="text-neutral-300 text-lg">Crafted silhouettes, enduring materials, and quiet confidence. Amigo celebrates modern femininity with editorial minimalism.</p>
 				</div>
 				<div className="grid grid-cols-2 gap-4">
-					<div className="aspect-[3/4] overflow-hidden bg-neutral-900" />
-					<div className="aspect-[3/4] overflow-hidden mt-10 bg-neutral-900" />
+					<div className="aspect-[3/4] overflow-hidden bg-neutral-900 flex items-center justify-center">
+						<Image
+							src="https://us.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-lv-heritage-35mm-reversible-belt--M4250U_PM1_Worn%20view.png?wid=1090&hei=1090"
+							alt="Placeholder 1"
+							width={400}
+							height={533}
+							className="object-cover w-full h-full"
+							priority
+						/>
+					</div>
+					<div className="aspect-[3/4] overflow-hidden mt-10 bg-neutral-900 flex items-center justify-center">
+						<Image
+							src="https://us.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-lv-oxford-loafer--BVL01KGZ02_PM1_Worn%20view.png?wid=1090&hei=1090"
+							alt="Placeholder 2"
+							width={400}
+							height={533}
+							className="object-cover w-full h-full"
+							priority
+						/>
+					</div>
 				</div>
 			</section>
 
 			<section className="px-6 md:px-10 xl:px-20 py-24">
 				<h3 className="font-serif text-3xl mb-10">Featured Collections</h3>
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-					{["silk", "linen", "cashmere"].map((k) => (
+					{Object.entries({
+						silk: "https://us.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-monogram-single-breasted-napolitana-jacket--HUFJ2WUQW900_PM1_Worn%20view.png?wid=1090&hei=1090",
+						linen: "https://us.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-reversible-double-face-blouson--HUFB2EUYT802_PM1_Worn%20view.png?wid=1090&hei=1090",
+						cashmere: "https://us.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-cashmere-blend-formal-denim-pants--HUFD1WTPY650_PM1_Worn%20view.png?wid=1090&hei=1090"
+					}).map(([k, src], idx) => (
 						<div key={k} className="group">
-							<div className="aspect-[3/4] overflow-hidden bg-neutral-900 transition-transform duration-500 group-hover:scale-105" />
+							<div className="aspect-[3/4] overflow-hidden bg-neutral-900 transition-transform duration-500 group-hover:scale-105 flex items-center justify-center">
+								<Image
+									src={src}
+									alt={`${k} collection`}
+									width={400}
+									height={533}
+									className="object-cover w-full h-full"
+									priority={idx === 0}
+								/>
+							</div>
 							<div className="mt-3 text-sm uppercase tracking-widest text-neutral-400">{k}</div>
 						</div>
 					))}
